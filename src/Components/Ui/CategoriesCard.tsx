@@ -10,9 +10,9 @@ const CategoriesCard: React.FC<{ categoryId: string, categoryName: string }> = (
 
     const renderProductsListByCategory = (productsInList: ProductInList[]) => {
         return (
-            <ul className="card-text">
+            <ul className="card-text text-end" dir="rtl">
                 {productsInList.map((item) => (
-                    <li key={item.product.id}>
+                    <li className="text-end" key={item.product.id}>
                         {item.product.name} {item.quantity > 1 ? `(${item.quantity})` : ""}
                     </li>
                 ))}
@@ -22,8 +22,8 @@ const CategoriesCard: React.FC<{ categoryId: string, categoryName: string }> = (
 
     return (
         <div className="card shadow-sm">
-            <div className="card-body">
-                <h5 className="card-title">{categoryName}</h5>
+            <div className="card-body text-end">
+                <h5 className="card-title">{categoryName} {`-  ${productsInList.length} מוצרים `}</h5>
                 {productsInList.length === 0 ? <p>Loading...</p> : renderProductsListByCategory(productsInList)}
             </div>
         </div>

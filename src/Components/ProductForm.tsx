@@ -61,18 +61,18 @@ const ProductForm: React.FC<Props> = ({ categories }) => {
             <div className="col-12 col-md-8 col-lg-6">
                 <form onSubmit={handleSubmit} className="p-3 bg-light rounded shadow-sm">
                     <div className="mb-3">
-                        <input
+                        <input dir="rtl"
                             type="text"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            placeholder="Product Name"
+                            placeholder="שם מוצר"
                             required
                             className="form-control"
                         />
                     </div>
-                    <div className="mb-3">
+                    <div className="mb-3" dir="rtl">
                         <select value={categoryId} onChange={(e) => setCategoryId(e.target.value)} required className="form-select">
-                            <option value="" disabled>Select a category</option>
+                            <option value="" disabled>בחר קטגוריה</option>
                             {categories?.map((category) => (
                                 <option key={category.id} value={category.id}>
                                     {category.name}
