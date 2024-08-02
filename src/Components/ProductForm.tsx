@@ -17,28 +17,40 @@ const ProductForm: React.FC<Props> = ({ categories }) => {
     const dispatch = useAppDispatch();
  
 
+    //get shopping list items from de state
     const shoppingList = useAppSelector((state) => state.shoppingList.items);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         try {
+
+            //if the product exist update the quantity of the product in the shoppingList else add to the list 
             const oldProduct = shoppingList.find(item => item.product.name === name);
+
             if (oldProduct) {
+
+                //create the new product data
                 const updatedProduct = {
                     ...oldProduct,
                     quantity: oldProduct.quantity + 1
                 };
                 
+                //send new product data to the shoppingList state 
                 dispatch(addProductToList(updatedProduct));
             } else {
+
+                //create productInList data
                 const product:Product={id:uuidv4(), name, categoryId}
                 const productInList: ProductInList = {quantity:1, product};
+                //add to to shoppingList state 
                 dispatch(addProductToList(productInList));
             }
 
+            //reset
             setName('');
             setCategoryId('');
+
         } catch (error) {
             console.error('Failed to add product: ', error);
         }

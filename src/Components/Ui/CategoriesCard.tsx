@@ -3,6 +3,8 @@ import { ProductInList } from '../../Store/interfaces/index';
 import { useAppSelector } from '../../Hooks/hooks';
 
 const CategoriesCard: React.FC<{ categoryId: string, categoryName: string }> = ({ categoryId, categoryName }) => {
+
+    //Gets the products from the shopping list whose category is equal to that received by the parent
     const productsInList = useAppSelector((state) => state.shoppingList.items)
         .filter(item => item.product.categoryId === categoryId);
 

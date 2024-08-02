@@ -16,6 +16,9 @@ const ProductList: React.FC<Props> = ({ categories }) => {
   const [saveShoppingList] = useSaveShoppingListMutation();
   const [addAllProducts] = useAddAllProductsMutation();
 
+
+  //The checkCategoriesOnList function is a React hook that processes a list of products and determines which categories are present in the list. 
+  //It utilizes the useCallback hook to memoize the function, ensuring it only re-creates if its dependencies change.
   const checkCategoriesOnList = useCallback((items: ProductInList[]) => {
     const categoryIds = new Set(items.map(item => item.product.categoryId));
     const categoriesInList = categories.filter(category => categoryIds.has(category.id));
@@ -23,10 +26,13 @@ const ProductList: React.FC<Props> = ({ categories }) => {
     setCategoriesOnList(categoriesInList);
   }, [categories]);
 
+  //Renders the page for each change in the list to display the updated data
   useEffect(() => {
     checkCategoriesOnList(items);
   }, [items, checkCategoriesOnList]);
 
+
+  //render Products In List By Categories and send data to CategoriesCard
   const renderProductsInListByCategories = () => {
     console.log("Categories to render:", categoriesOnList);
     return categoriesOnList.map(category => (
@@ -36,6 +42,7 @@ const ProductList: React.FC<Props> = ({ categories }) => {
     ));
   }
 
+  //convert data from shoppingList to save in DB
   const getListOfProductsFromItemsToSave = (items: ProductInList[]): Product[] => {
     return items.map(item => {
       const product = item.product;
@@ -43,6 +50,7 @@ const ProductList: React.FC<Props> = ({ categories }) => {
     }).filter(product => product !== null) as Product[];
   };
 
+  //convert data from shoppingList to save in DB
   const getProductsFormatIdQuantity = (items: ProductInList[]): any[] => {
     return items.map(item => ({
       productId: item.product.id,
@@ -67,11 +75,11 @@ const ProductList: React.FC<Props> = ({ categories }) => {
         .then((payload) => console.log('fulfilled', payload))
         .catch((error) => console.error('rejected', error));
 
-      await saveShoppingList(newShoppingList ).unwrap() // Enviar datos como un objeto
+      await saveShoppingList(newShoppingList ).unwrap() 
         .then((payload) => console.log('fulfilled', payload))
         .catch((error) => console.error('rejected', error));
 
-      // Clean and reset state of shoppinglist + totalItems from the store
+      // Clean and reset state of shoppinglist and  totalItems from the store
       dispatch(clearShoppingList());
       alert('Shopping list saved successfully!');
     } catch (error) {
